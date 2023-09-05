@@ -6,9 +6,10 @@ import {
   loginSuccess,
   loginFailure,
 } from "../../redux/user/userSlice";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../../redux/user/authSlice";
 export const Login = () => {
+  const { authenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const userLogin = async (user) => {
     try {
@@ -19,13 +20,16 @@ export const Login = () => {
       );
       const { token } = response.data;
       localStorage.setItem("token", token);
-      dispatch(loginSuccess(token));
+      const decode = JSON.parse(atob(token.split(".")[1]));
+      dispatch(loginSuccess(decode));
+      dispatch(login());
     } catch (error) {
       console.log(error.response.data.message);
       dispatch(loginFailure(error.response.data.message));
     }
   };
   const Navigate = useNavigate();
+  console.log("Login Success: " + authenticated);
   const initialState = {
     email: "",
     password: "",

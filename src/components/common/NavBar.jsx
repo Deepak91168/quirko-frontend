@@ -2,8 +2,10 @@ import React from "react";
 import logo from "../../assets/images/logo.png";
 import { BiMenu } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 function NavBar() {
+  const { user } = useSelector((state) => state.user);
+  console.log("User is : " +user);
   const Navigate = useNavigate();
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -70,9 +72,11 @@ function NavBar() {
             </li>
             <li>About</li>
 
-            <li>
-              <Link to="/login"> SignIn </Link>
-            </li>
+            {(user == null) && (
+              <li>
+                <Link to="/login"> SignIn </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
