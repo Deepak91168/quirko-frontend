@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/user/authSlice";
+import Cookies from "js-cookie";
 const getUsers = async (setUser) => {
   try {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
+    console.log(token);
     const response = await axios.get(
       "http://localhost:8000/api/users/profile",
       {
@@ -23,7 +25,7 @@ const getUsers = async (setUser) => {
 
 export const Profile = () => {
   const { initialUser } = useSelector((state) => state.user);
-  const { authenticated } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState(initialUser);
@@ -34,14 +36,14 @@ export const Profile = () => {
   const handelLogout = () => {
     console.log("logout");
     setUser(null);
-    dispatch(logout());
     localStorage.removeItem("token");
+    dispatch(logout());
     navigate("/login");
   };
 
   return (
     <>
-      {user && (
+      {(token && user) && (
         <div>
           <div className="text-xl">User Details</div>
           <p>{user.id}</p>

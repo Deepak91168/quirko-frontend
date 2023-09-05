@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import {
   loginStart,
   loginSuccess,
@@ -9,7 +10,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../redux/user/authSlice";
 export const Login = () => {
-  const { authenticated } = useSelector((state) => state.auth);
+  // console.log("Login: " + Cookies.get("token"));
+  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const userLogin = async (user) => {
     try {
@@ -19,17 +21,16 @@ export const Login = () => {
         user
       );
       const { token } = response.data;
-      localStorage.setItem("token", token);
+      dispatch(login(token));
       const decode = JSON.parse(atob(token.split(".")[1]));
       dispatch(loginSuccess(decode));
-      dispatch(login());
     } catch (error) {
       console.log(error.response.data.message);
       dispatch(loginFailure(error.response.data.message));
     }
   };
   const Navigate = useNavigate();
-  console.log("Login Success: " + authenticated);
+  // console.log("Login Success: " + token);
   const initialState = {
     email: "",
     password: "",

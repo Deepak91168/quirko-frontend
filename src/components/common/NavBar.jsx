@@ -4,8 +4,8 @@ import { BiMenu } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 function NavBar() {
-  const { user } = useSelector((state) => state.user);
-  console.log("User is : " +user);
+  const { token } = useSelector((state) => state.auth);
+  console.log("User is : " + token);
   const Navigate = useNavigate();
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -16,52 +16,54 @@ function NavBar() {
             Quirko
           </span>
         </Link>
-        <div className="flex items-center md:order-2">
-          <button
-            type="button"
-            className="flex mr-3 text-sm bg-gray-400 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
-            onClick={() => {
-              Navigate("/profile");
-            }}
-          >
-            <span className="sr-only">Open user menu</span>
+        {token && (
+          <div className="flex items-center md:order-2">
+            <button
+              type="button"
+              className="flex mr-3 text-sm bg-gray-400 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              id="user-menu-button"
+              aria-expanded="false"
+              data-dropdown-toggle="user-dropdown"
+              data-dropdown-placement="bottom"
+              onClick={() => {
+                Navigate("/profile");
+              }}
+            >
+              <span className="sr-only">Open user menu</span>
 
-            <img
-              className="w-8 h-8 rounded-full"
-              src="/docs/images/people/profile-picture-3.jpg"
-              alt="user photo"
-            />
-          </button>
+              <img
+                className="w-8 h-8 rounded-full"
+                src="/docs/images/people/profile-picture-3.jpg"
+                alt="user photo"
+              />
+            </button>
 
-          <div
-            className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-            id="user-dropdown"
-          >
-            <div className="px-4 py-3">
-              <span className="block text-sm text-gray-900 dark:text-white">
-                Bonnie Green
-              </span>
-              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                name@flowbite.com
-              </span>
+            <div
+              className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+              id="user-dropdown"
+            >
+              <div className="px-4 py-3">
+                <span className="block text-sm text-gray-900 dark:text-white">
+                  Bonnie Green
+                </span>
+                <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
+                  name@flowbite.com
+                </span>
+              </div>
+              <ul className="py-2" aria-labelledby="user-menu-button"></ul>
             </div>
-            <ul className="py-2" aria-labelledby="user-menu-button"></ul>
-          </div>
 
-          <button
-            data-collapse-toggle="navbar-user"
-            type="button"
-            className="color-white inline-flex items-center p-2  justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-user"
-            aria-expanded="false"
-          >
-            <BiMenu className="h-6 w-6 text-white" />
-          </button>
-        </div>
+            <button
+              data-collapse-toggle="navbar-user"
+              type="button"
+              className="color-white inline-flex items-center p-2  justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              aria-controls="navbar-user"
+              aria-expanded="false"
+            >
+              <BiMenu className="h-6 w-6 text-white" />
+            </button>
+          </div>
+        )}
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-user"
@@ -72,7 +74,7 @@ function NavBar() {
             </li>
             <li>About</li>
 
-            {(user == null) && (
+            {token == null && (
               <li>
                 <Link to="/login"> SignIn </Link>
               </li>
