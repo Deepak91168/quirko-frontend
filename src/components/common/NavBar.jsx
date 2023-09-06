@@ -1,85 +1,60 @@
-import React from "react";
 import logo from "../../assets/images/logo.png";
-import { BiMenu } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 function NavBar() {
   const { token } = useSelector((state) => state.auth);
-  console.log("User is : " + token);
-  const Navigate = useNavigate();
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="max-w-screen-xl mx-auto mt-2 bg-slate-200 rounded-lg">
+      <div className=" flex flex-wrap items-center justify-between mx-auto p-4 pr-0 pt-0 pb-0 border-2 rounded-lg ">
         <Link to="https://flowbite.com/" className="flex items-center">
           <img src={logo} className="h-10 mr-2" alt="Quirko Logo" />
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-xl font-semibold whitespace-nowrap">
             Quirko
           </span>
         </Link>
-        {token && (
-          <div className="flex items-center md:order-2">
-            <button
-              type="button"
-              className="flex mr-3 text-sm bg-gray-400 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-              id="user-menu-button"
-              aria-expanded="false"
-              data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom"
-              onClick={() => {
-                Navigate("/profile");
-              }}
-            >
-              <span className="sr-only">Open user menu</span>
-
-              <img
-                className="w-8 h-8 rounded-full"
-                src="/docs/images/people/profile-picture-3.jpg"
-                alt="user photo"
-              />
-            </button>
-
-            <div
-              className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-              id="user-dropdown"
-            >
-              <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                  name@flowbite.com
-                </span>
-              </div>
-              <ul className="py-2" aria-labelledby="user-menu-button"></ul>
-            </div>
-
-            <button
-              data-collapse-toggle="navbar-user"
-              type="button"
-              className="color-white inline-flex items-center p-2  justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="navbar-user"
-              aria-expanded="false"
-            >
-              <BiMenu className="h-6 w-6 text-white" />
-            </button>
-          </div>
-        )}
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          className="items-center justify-between hidden md:flex md:w-auto md:order-1 bg-gray-800 p-2 rounded-lg w-full shadow-lg"
           id="navbar-user"
         >
-          <ul className="text-white flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className=" text-white flex space-x-6 text-sm px-16 p-2">
             <li>
-              <Link to="/"> Home </Link>
+              <Link to="/" className="hover:text-blue-400">
+                Home
+              </Link>
             </li>
-            <li>About</li>
-
-            {token == null && (
+            <li>
+              <Link to="/posts" className="hover:text-blue-400">
+                Posts
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-blue-400">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-blue-400">
+                Contact
+              </Link>
+            </li>
+            {token === null && (
               <li>
-                <Link to="/login"> SignIn </Link>
+                <Link to="/login" className="hover:text-blue-400">
+                  SignIn
+                </Link>
               </li>
             )}
           </ul>
+          {token != null && (
+            <div className="flex justify-center items-center pr-4">
+              <div className="text-bold text-blue-400 mr-4">Username</div>
+              <img
+                src={logo}
+                className="rounded-full border-2 h-9 w-9 hover:cursor-pointer "
+                alt="User Profile Picture"
+              />
+            </div>
+          )}
         </div>
       </div>
     </nav>

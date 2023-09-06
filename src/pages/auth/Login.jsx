@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../redux/user/authSlice";
 export const Login = () => {
-  // console.log("Login: " + Cookies.get("token"));
+  const Navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const userLogin = async (user) => {
@@ -24,13 +24,13 @@ export const Login = () => {
       dispatch(login(token));
       const decode = JSON.parse(atob(token.split(".")[1]));
       dispatch(loginSuccess(decode));
+      Navigate("/profile");
     } catch (error) {
       console.log(error.response.data.message);
       dispatch(loginFailure(error.response.data.message));
     }
   };
-  const Navigate = useNavigate();
-  // console.log("Login Success: " + token);
+
   const initialState = {
     email: "",
     password: "",
@@ -80,3 +80,7 @@ export const Login = () => {
     </form>
   );
 };
+// TODO: Edit Profile Feature
+// TODO: Delete Profile Feature
+// TODO: Add Profile Picture Feature
+// TODO: Add User Bio Feature

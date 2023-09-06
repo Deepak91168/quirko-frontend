@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/user/authSlice";
+import useLoginStatus from "../../hooks/useLoginStatus";
 import Cookies from "js-cookie";
+
 const getUsers = async (setUser) => {
   try {
     const token = Cookies.get("token");
@@ -24,8 +26,8 @@ const getUsers = async (setUser) => {
 };
 
 export const Profile = () => {
+  const { loggedIn, checkingStatus } = useLoginStatus();
   const { initialUser } = useSelector((state) => state.user);
-  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState(initialUser);
@@ -36,24 +38,26 @@ export const Profile = () => {
   const handelLogout = () => {
     console.log("logout");
     setUser(null);
-    localStorage.removeItem("token");
     dispatch(logout());
     navigate("/login");
   };
 
   return (
     <>
-      {(token && user) && (
+      {checkingStatus && <div>Checking Status</div>}
+      {loggedIn && user && (
         <div>
-          <div className="text-xl">User Details</div>
-          <p>{user.id}</p>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
+          <div>
+            <div className="text-xl">User Details</div>
+            <p>{user.id}</p>
+            <p>{user.name}</p>
+            <p>{user.email}</p>
+          </div>
+          <button onClick={handelLogout} className="border-2 border-black p-2">
+            Logout
+          </button>
         </div>
       )}
-      <button onClick={handelLogout} className="border-2 border-black p-2">
-        Logout
-      </button>
     </>
   );
 };

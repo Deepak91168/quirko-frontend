@@ -1,11 +1,9 @@
-import axios from "axios";
-import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Register } from "./pages/auth/Register";
 import { Login } from "./pages/auth/Login";
 import { Profile } from "./pages/auth/Profile";
 import PrivateRoute from "./utils/PrivateRoute";
-import { Home } from "./pages/auth/Home";
+import { Home } from "./pages/general/Home";
 import NavBar from "./components/common/NavBar";
 
 function App() {

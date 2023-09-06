@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 const initialState = {
-  user: null,
+  user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
   loading: false,
   error: false,
 };
@@ -13,6 +14,7 @@ const userSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.user = action.payload;
+      Cookies.set("user", JSON.stringify(action.payload), { expires: 30 });
       state.loading = false;
       state.error = false;
     },
