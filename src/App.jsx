@@ -5,6 +5,7 @@ import { Profile } from "./pages/auth/Profile";
 import PrivateRoute from "./utils/PrivateRoute";
 import { Home } from "./pages/general/Home";
 import NavBar from "./components/common/NavBar";
+import { AllPosts } from "./pages/posts/AllPosts";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/profile" element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
         </Route>
+        <Route path="/posts" element={<AllPosts />} />
       </Routes>
     </Router>
   );
