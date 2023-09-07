@@ -25,6 +25,7 @@ export const AllPosts = () => {
         <ul>
           {posts.map((post) => (
             <PostCard
+              id={post._id}
               key={post._id}
               title={post.title}
               content={post.content}

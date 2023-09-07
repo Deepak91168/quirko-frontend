@@ -6,6 +6,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { Home } from "./pages/general/Home";
 import NavBar from "./components/common/NavBar";
 import { AllPosts } from "./pages/posts/AllPosts";
+import { Post } from "./components/post/Post";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/posts" element={<AllPosts />} />
+        <Route path="/posts/:id" element={<Post />} />
       </Routes>
     </Router>
   );

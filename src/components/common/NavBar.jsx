@@ -46,14 +46,17 @@ function NavBar() {
             )}
           </ul>
           {token != null && (
-            <div className="flex justify-center items-center pr-4">
+            <Link
+              to="/profile"
+              className="flex justify-center items-center pr-4"
+            >
               <div className="text-bold text-blue-400 mr-4">Username</div>
               <img
                 src={logo}
                 className="rounded-full border-2 h-9 w-9 hover:cursor-pointer "
                 alt="User Profile Picture"
               />
-            </div>
+            </Link>
           )}
         </div>
       </div>
